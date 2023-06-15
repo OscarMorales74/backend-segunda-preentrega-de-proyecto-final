@@ -3,10 +3,10 @@ import { ProdsModel } from "./models/products.model.js";
 export default class ProductsDaoMongoDB {
 
   //llega la peticion desde products.services.js y se deriva a la ddbb
-  async getAllProducts() {
+  async getAllProducts(page = 1, limit = 10) {
     try {
-     const response = await ProdsModel.find({});
-     return response;
+      const response = await ProdsModel.paginate({}, {page, limit });
+      return response;
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +29,7 @@ export default class ProductsDaoMongoDB {
       console.log(error);
     }
   }
-
+  
   async updateProduct(id, obj) {
     try {
       await ProdsModel.updateOne({_id: id}, obj);

@@ -7,9 +7,9 @@ const prodDao = new ProductsDaoMongoDB();
 
 //service solo sabe a que metodo del dao llamar para cumplir la funcion
 //llega la peticion desde controllers y se deriva a products.dao.js
-export const getAllProdServ = async () => {
+export const getAllProdServ = async (page, limit) => {
     try {
-     const docs = await prodDao.getAllProducts();
+     const docs = await prodDao.getAllProducts(page, limit);
      return docs;
     } catch (error) {
       console.log(error);

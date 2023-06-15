@@ -3,8 +3,8 @@ import {
     getAllCartsServ,
     getCartServ,
     addProdToCartServ,
-    delProdFromCartServ,
-} from "../services/carts.service.js";
+    delProdFromCartServ
+} from "../services/carts.services.js";
 
 export const getAllCartsCtll = async (req, res, next) => {
     try {
@@ -31,19 +31,21 @@ export const createCartCtll = async (req, res, next) => {
         next(error);
     }
 };
+
 export const addProdToCartCtll = async (req, res, next) => {
-    try {
-      const { cId, pId } = req.params;
-      const product = await addProdToCartServ(cId,pId);
-      if (product) {
-        res.status(201).send({status: "success", mensaje: "Product successfully added to cart!", payload: product});
-      } else {
-        res.status(404).send({status: "error", mensaje:"The product or cart you are searching for could not be found!"});
-      } 
-    } catch (error) {
-      next(error);
-    }
+  try {
+    const { cId, pId } = req.params;
+    const product = await addProdToCartServ(cId,pId);
+    if (product) {
+      res.status(201).send({status: "success", mensaje: "Product successfully added to cart!", payload: product, quantity: product.quantity});
+    } else {
+      res.status(404).send({status: "error", mensaje:"The product or cart you are searching for could not be found!"});
+    } 
+  } catch (error) {
+    next(error);
+  }
 };
+
 export const delProdFromCartCtll = async (req, res, next) => {
     try {
       const { cId, pId } = req.params;
